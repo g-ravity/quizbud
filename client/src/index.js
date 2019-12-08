@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import App from "./components/App";
+import HomeScreen from "./screens/HomeScreen";
 
-ReactDOM.render(<App />, document.querySelector("#root"));
+ReactDOM.render(<HomeScreen />, document.querySelector("#root"));
