@@ -1,0 +1,49 @@
+.questionGroup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+}
+
+.question {
+  font-size: 2rem;
+  margin-bottom: 50px;
+  font-weight: initial;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.options div {
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: none;
+  color: #ffffff;
+  transition: all 0.2s ease-in-out;
+}
+
+.options div:hover {
+  background-color: #ffffff;
+  color: #85a1ff;
+}
+
+.questionNumber {
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+  font-size: 5.5rem;
+}
+
+.totalQuestions {
+  font-size: 2rem;
+  margin-left: 10px;
+}
