@@ -3,10 +3,17 @@ import { connect } from "react-redux";
 
 import Showcase from "../components/Showcase";
 import Loader from "../components/Loader";
-import quizStyle from "./css/Quiz.module.css";
-import { getQuestions } from "../actions";
+import Question from "../components/Question";
+import Modal from "../components/Modal";
+import { getQuestions, submitAnswer, submitUserData } from "../actions";
 
-const QuizScreen = ({ getQuestions, questionsArr }) => {
+const QuizScreen = ({
+  getQuestions,
+  submitAnswer,
+  submitUserData,
+  questionsArr,
+  userId
+}) => {
   const [loading, setLoading] = useState(true);
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
@@ -19,27 +26,10 @@ const QuizScreen = ({ getQuestions, questionsArr }) => {
     if (questionsArr && questionsArr.length) setLoading(false);
   }, [questionsArr]);
 
-  const onChoiceSubmit = async event => {
-    const params = {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      method: "POST",
-      body: JSON.stringify({
-        questionId: questionsArr[currentQuestion]._id,
-        answer: event.target.innerText
-      })
-    };
-    const response = await fetch("/api/user/quiz", params);
-    if (response.status === 200) setCurrentQuestion(currentQuestion + 1);
-  };
-
-  const renderOptions = () => {
-    return questionsArr[currentQuestion].options.map(cur => (
-      <div key={cur} onClick={onChoiceSubmit}>
-        {cur}
-      </div>
-    ));
+  const onChoiceSubmit = (questionId, answer) => {
+    submitAnswer(questionId, answer);
+    if (currentQuestion === questionsArr.length - 1) submitUserData();
+    else setCurrentQuestion(currentQuestion + 1);
   };
 
   return (
@@ -48,20 +38,14 @@ const QuizScreen = ({ getQuestions, questionsArr }) => {
         <Loader />
       ) : (
         <>
-          <div className={quizStyle.questionGroup}>
-            <p className={quizStyle.question}>
-              {questionsArr[currentQuestion].question}
-            </p>
-            <div className={quizStyle.options}>{renderOptions()}</div>
-          </div>
-          <div className={quizStyle.questionNumber}>
-            {currentQuestion < 9
-              ? `0${currentQuestion + 1}`
-              : `${currentQuestion + 1}`}
-            <span className={quizStyle.totalQuestions}>
-              /&nbsp;{questionsArr.length}
-            </span>
-          </div>
+          <Question
+            questionObj={questionsArr[currentQuestion]}
+            qno={currentQuestion + 1}
+            totalQuestions={questionsArr.length}
+            onChoiceSubmit={onChoiceSubmit}
+            isPlayer={false}
+          />
+          {userId ? <Modal userId={userId} /> : null}
         </>
       )}
     </Showcase>
@@ -69,7 +53,11 @@ const QuizScreen = ({ getQuestions, questionsArr }) => {
 };
 
 const mapStateToProps = state => {
-  return { questionsArr: state.quiz.questionsArr };
+  return { questionsArr: state.questions, userId: state.userId };
 };
 
-export default connect(mapStateToProps, { getQuestions })(QuizScreen);
+export default connect(mapStateToProps, {
+  getQuestions,
+  submitAnswer,
+  submitUserData
+})(QuizScreen);

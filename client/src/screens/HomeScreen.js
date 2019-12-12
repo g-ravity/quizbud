@@ -1,53 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
-import homeStyle from "./css/Home.module.css";
 import Showcase from "../components/Showcase";
 import Loader from "../components/Loader";
+import NameInput from "../components/NameInput";
 import { registerUser, checkRegistration } from "../actions";
 
 const HomeScreen = ({
   registerUser,
   checkRegistration,
-  isRegistered,
+  userId,
+  user,
   history
 }) => {
-  const [name, setName] = useState("");
-
   useEffect(() => {
     checkRegistration();
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    if (isRegistered) history.push("/quiz");
+    if (userId) history.push(`/quiz/${userId}`);
+    if (user.name) history.push("/quiz");
     // eslint-disable-next-line
-  }, [isRegistered]);
+  }, [userId, user]);
 
-  const onInputSubmit = () => {
+  const onInputSubmit = name => {
     registerUser(name);
   };
 
   return (
     <Showcase>
-      {isRegistered === false ? (
-        <>
-          <div className={homeStyle.input}>
-            <p>What's Your Name?</p>
-            <input
-              type="text"
-              className={homeStyle.nameInput}
-              placeholder="Enter Your Name"
-              onChange={event => {
-                setName(event.target.value);
-              }}
-              value={name}
-            />
-          </div>
-          <button className={homeStyle.button} onClick={onInputSubmit}>
-            Next
-          </button>
-        </>
+      {userId === false ? (
+        <NameInput header="What's Your Name?" onInputSubmit={onInputSubmit} />
       ) : (
         <Loader />
       )}
@@ -57,7 +41,8 @@ const HomeScreen = ({
 
 const mapStateToProps = state => {
   return {
-    isRegistered: state.isRegistered
+    userId: state.userId,
+    user: state.user
   };
 };
 
