@@ -1,7 +1,7 @@
 const express = require("express");
 
 const router = express.Router();
-const Player = require("../models/Player");
+const Player = require("../models/player");
 
 router.post("/", async (req, res) => {
 	let player = new Player({

@@ -1,8 +1,8 @@
 const express = require("express");
 
 const router = express.Router();
-const User = require("../models/User");
-const Player = require("../models/Player");
+const User = require("../models/user");
+const Player = require("../models/player");
 
 router.get("/", async (req, res) => {
 	if (req.session.id) {
