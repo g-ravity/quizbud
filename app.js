@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 const config = require("config");
+const cors = require("cors");
 
 const app = express();
 const userRoute = require("./routes/userRoute");
@@ -32,6 +33,12 @@ mongoose
 	})
 	.then(() => console.log("Connected to MongoDB"))
 	.catch(err => console.log("Error while connecting to MongoDB"));
+
+app.use(
+	cors({
+		origin: "https://quizbud.netlify.com"
+	})
+);
 
 // Body Parser Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
