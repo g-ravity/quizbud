@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
 		const questions = await Question.find({});
 		return res.status(200).send(questions);
 	} catch (err) {
-		return res.status(400).send("Error occurred while feteching data!");
+		return res.status(400).send("Error occurred while fetching data!");
 	}
 });
 

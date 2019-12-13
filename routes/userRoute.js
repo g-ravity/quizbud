@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
 	if (req.session.id) {
 		const user = await User.findById(req.session.id);
 		if (user) return res.status(200).send(user.userId);
-		return res.status(400).send("User doesn't exist");
+		return res.status(404).send("User doesn't exist");
 	}
 	return res.status(400).send("User not registered");
 });

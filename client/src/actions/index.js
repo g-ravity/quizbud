@@ -1,3 +1,5 @@
+import axiosApi from "../apis";
+
 export const registerUser = name => {
 	return {
 		type: "REGISTER_USER",
@@ -8,25 +10,12 @@ export const registerUser = name => {
 export const submitUserData = user => {
 	return async (dispatch, getState) => {
 		const { user } = getState();
-		const params = {
-			headers: {
-				"Content-Type": "application/json"
-			},
-			method: "POST",
-			body: JSON.stringify({
-				name: user.name,
-				quiz: user.quiz
-			})
-		};
 		try {
-			const response = await fetch("/api/user", params);
-			if (response.status === 200) {
-				const userId = await response.text();
-				dispatch({
-					type: "USER_REGISTERED",
-					payload: userId
-				});
-			}
+			const response = await axiosApi.post("/api/user", { name: user.name, quiz: user.quiz });
+			dispatch({
+				type: "USER_REGISTERED",
+				payload: response.data
+			});
 		} catch (err) {
 			console.log("Something went wrong!");
 		}
@@ -36,19 +25,15 @@ export const submitUserData = user => {
 export const checkRegistration = () => {
 	return async (dispatch, getState) => {
 		try {
-			const response = await fetch("/api/user");
-			if (response.status === 200) {
-				const userId = await response.text();
-				dispatch({
-					type: "USER_REGISTERED",
-					payload: userId
-				});
-			} else
-				dispatch({
-					type: "USER_NOT_REGISTERED"
-				});
+			const response = await axiosApi.get("/api/user");
+			dispatch({
+				type: "USER_REGISTERED",
+				payload: response.data
+			});
 		} catch (err) {
-			console.log("Something went wrong!");
+			dispatch({
+				type: "USER_NOT_REGISTERED"
+			});
 		}
 	};
 };
@@ -56,14 +41,11 @@ export const checkRegistration = () => {
 export const getQuestions = () => {
 	return async (dispatch, getState) => {
 		try {
-			const response = await fetch("/api/questions");
-			if (response.status === 200) {
-				const questions = await response.json();
-				dispatch({
-					type: "QUESTIONS",
-					payload: questions
-				});
-			}
+			const response = await axiosApi.get("/api/questions");
+			dispatch({
+				type: "QUESTIONS",
+				payload: response.data
+			});
 		} catch (err) {
 			console.log("Something went wrong!");
 		}
@@ -103,26 +85,16 @@ export const updatePlayerScore = () => {
 export const submitPlayerData = () => {
 	return async (dispatch, getState) => {
 		const { user, player } = getState();
-		const params = {
-			headers: {
-				"Content-Type": "application/json"
-			},
-			method: "POST",
-			body: JSON.stringify({
+		try {
+			const response = await axiosApi.post("/api/player", {
 				userId: user.userId,
 				name: player.name,
 				score: player.score
-			})
-		};
-		try {
-			const response = await fetch("/api/player", params);
-			if (response.status === 200) {
-				const player = await response.json();
-				dispatch({
-					type: "PLAYER_DATA",
-					payload: player
-				});
-			}
+			});
+			dispatch({
+				type: "PLAYER_DATA",
+				payload: response.data
+			});
 		} catch (err) {
 			console.log("Something went wrong!");
 		}
@@ -133,14 +105,11 @@ export const getResults = () => {
 	return async (dispatch, getState) => {
 		const { user } = getState();
 		try {
-			const response = await fetch(`/api/user/${user.userId}/results`);
-			if (response.status === 200) {
-				const results = await response.json();
-				dispatch({
-					type: "USER_RESULTS",
-					payload: results
-				});
-			}
+			const response = await axiosApi.get(`/api/user/${user.userId}/results`);
+			dispatch({
+				type: "USER_RESULTS",
+				payload: response.data
+			});
 		} catch (err) {
 			console.log("Something went wrong!");
 		}
