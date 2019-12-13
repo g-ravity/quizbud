@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
 			}
 		]
 	},
-	userId: { type: String, default: shortid.generate }
+	userId: { type: String, default: shortid.generate, unique: true }
 });
 
 const User = mongoose.model("User", userSchema);

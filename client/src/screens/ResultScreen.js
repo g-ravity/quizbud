@@ -4,8 +4,6 @@ import { connect } from "react-redux";
 import Showcase from "../components/Showcase";
 import Loader from "../components/Loader";
 import goldAward from "./img/gold.png";
-import silverAward from "./img/silver.png";
-import bronzeAward from "./img/bronze.png";
 import resultStyle from "./css/Result.module.css";
 import { getResults } from "../actions";
 

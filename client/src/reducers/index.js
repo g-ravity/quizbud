@@ -60,9 +60,21 @@ const quizReducer = (state = [], action) => {
 	}
 };
 
+const adminReducer = (state = null, action) => {
+	switch (action.type) {
+		case "ADMIN_LOGGED_IN":
+			return action.payload;
+		case "ADMIN_LOGGED_OUT":
+			return false;
+		default:
+			return state;
+	}
+};
+
 export default combineReducers({
 	userId: authReducer,
 	questions: quizReducer,
 	user: userReducer,
-	player: playerReducer
+	player: playerReducer,
+	admin: adminReducer
 });
