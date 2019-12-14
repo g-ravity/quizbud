@@ -54,11 +54,7 @@ const QuizScreen = ({ getQuestions, submitAnswer, submitUserData, questionsArr, 
 							<p className={quizStyle.header}>Your Quiz has been created!</p>
 							<div className={quizStyle.linkGroup}>
 								<p>Here's your Quiz Link:</p>
-								<input
-									value={`${window.location.href}/quiz/${userId}`}
-									className="quiz-link"
-									readOnly
-								/>
+								<input value={`${window.location.href}/${userId}`} className="quiz-link" readOnly />
 								<div className={quizStyle.buttonGroup}>
 									<button onClick={copyText}>Copy Link</button>
 									<button>
