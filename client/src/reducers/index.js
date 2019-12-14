@@ -56,7 +56,7 @@ const quizReducer = (state = [], action) => {
 		case "QUESTIONS":
 			return action.payload;
 		case "QUESTION_SUBMIT":
-			return [action.payload, ...state];
+			return [...state, action.payload];
 		case "QUESTION_DELETE":
 			return state.filter(cur => cur._id !== action.payload._id);
 		default:

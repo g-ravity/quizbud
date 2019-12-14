@@ -48,10 +48,12 @@ const DashboardScreen = ({
 		for (const key in questionObj.options) options.push(questionObj.options[key]);
 		options.sort();
 		submitQuestion(questionObj.question, options);
+		setQuestionObj({ question: "", options: {} });
 	};
 
-	const renderQuestions = () =>
-		questionsArr.map(cur => (
+	const renderQuestions = () => {
+		const questions = [...questionsArr];
+		return questions.reverse().map(cur => (
 			<div
 				key={cur._id}
 				className={dashboardStyle.questionGroup}
@@ -68,6 +70,7 @@ const DashboardScreen = ({
 				</div>
 			</div>
 		));
+	};
 
 	return !admin ? (
 		<Loader />
