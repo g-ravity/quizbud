@@ -14,8 +14,8 @@
 
 .questionGroup {
 	background: #ffffff;
-	margin: 0.5%;
-	width: 49%;
+	margin: 1%;
+	width: 48%;
 	padding: 20px;
 	border-radius: 20px;
 	box-sizing: border-box;
@@ -66,11 +66,46 @@
 }
 
 .add {
-	background-color: #ffffff;
-	color: #85a1ff;
+	background-color: #87ff0f;
+	color: #ffffff;
+	padding: 15px 17px;
 }
 
 .logout {
 	color: #ffffff;
 	background-color: #ff3030;
+}
+
+.questionInput {
+	background: none;
+	border: 2px solid #85a1ff;
+	padding: 10px;
+	color: #333333;
+	text-align: center;
+	border-radius: 10px;
+}
+
+.questionInput:focus {
+	outline: 0;
+}
+
+.questionInput {
+	font-size: 1.5rem;
+	font-weight: initial;
+	margin: 20px 0;
+	width: 90%;
+}
+
+.addButton {
+	background: #85a1ff;
+	color: #ffffff;
+	text-transform: uppercase;
+	padding: 10px;
+	border: none;
+	cursor: pointer;
+	margin-top: 20px;
+}
+
+.addButton:focus {
+	outline: 0;
 }

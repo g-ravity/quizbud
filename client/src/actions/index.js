@@ -52,6 +52,20 @@ export const getQuestions = () => {
 	};
 };
 
+export const submitQuestion = (question, options) => {
+	return async (dispatch, getState) => {
+		try {
+			const response = await axiosApi.post("/api/question", { question, options });
+			dispatch({
+				type: "QUESTION_SUBMITTED",
+				payload: response.data
+			});
+		} catch (err) {
+			console.log("Something went wrong!");
+		}
+	};
+};
+
 export const submitAnswer = (questionId, answer) => {
 	return {
 		type: "SUBMIT_ANSWER",

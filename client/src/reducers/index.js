@@ -55,6 +55,8 @@ const quizReducer = (state = [], action) => {
 	switch (action.type) {
 		case "QUESTIONS":
 			return action.payload;
+		case "QUESTION_SUBMITTED":
+			return [...state, action.payload];
 		default:
 			return state;
 	}
