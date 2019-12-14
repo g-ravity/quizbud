@@ -5,11 +5,13 @@ const cookieSession = require("cookie-session");
 const config = require("config");
 const cors = require("cors");
 
-const app = express();
 const userRoute = require("./routes/userRoute");
 const questionRoute = require("./routes/questionRoute");
 const playerRoute = require("./routes/playerRoute");
 const adminRoute = require("./routes/adminRoute");
+
+const app = express();
+app.enable("trust proxy");
 
 if (!config.get("jwtPrivateKey")) {
 	console.log("App Crashed! JWT Private Key not provided");
@@ -50,8 +52,6 @@ app.use(
 // Body Parser Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-app.set("trust proxy", 1);
 
 // Cookie Session Middleware
 app.use(
