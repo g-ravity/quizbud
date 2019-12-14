@@ -16,14 +16,21 @@
 	background: #ffffff;
 	margin: 1%;
 	width: 48%;
-	padding: 20px;
 	border-radius: 20px;
 	box-sizing: border-box;
+	position: relative;
 }
 
 .questionGroup p,
 .questionGroup div {
 	color: #85a1ff;
+}
+
+.questionContainer {
+	padding: 20px;
+	border-radius: 20px;
+	border: none;
+	transition: all 0.2s ease-in-out;
 }
 
 .question {
@@ -45,6 +52,23 @@
 	border-radius: 10px;
 	font-weight: 1.2rem;
 	cursor: context-menu;
+}
+
+.delete {
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	color: #333333;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+}
+
+.delete:hover {
+	color: #ff3030;
+}
+
+.delete:hover + .questionContainer {
+	border: 3px solid #ff3030;
 }
 
 .buttonGroup {

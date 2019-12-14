@@ -57,7 +57,21 @@ export const submitQuestion = (question, options) => {
 		try {
 			const response = await axiosApi.post("/api/question", { question, options });
 			dispatch({
-				type: "QUESTION_SUBMITTED",
+				type: "QUESTION_SUBMIT",
+				payload: response.data
+			});
+		} catch (err) {
+			console.log("Something went wrong!");
+		}
+	};
+};
+
+export const deleteQuestion = id => {
+	return async (dispatch, getState) => {
+		try {
+			const response = await axiosApi.delete(`/api/question/${id}`);
+			dispatch({
+				type: "QUESTION_DELETE",
 				payload: response.data
 			});
 		} catch (err) {

@@ -5,7 +5,13 @@ import Loader from "../components/Loader";
 import Modal from "../components/Modal";
 import Option from "../components/Option";
 import dashboardStyle from "./css/Dashboard.module.css";
-import { adminLogout, getQuestions, checkAdminAuth, submitQuestion } from "../actions";
+import {
+	adminLogout,
+	getQuestions,
+	checkAdminAuth,
+	submitQuestion,
+	deleteQuestion
+} from "../actions";
 
 const DashboardScreen = ({
 	adminLogout,
@@ -14,7 +20,8 @@ const DashboardScreen = ({
 	history,
 	getQuestions,
 	checkAdminAuth,
-	submitQuestion
+	submitQuestion,
+	deleteQuestion
 }) => {
 	const [showModal, setShowModal] = useState(false);
 	const [questionObj, setQuestionObj] = useState({ question: "", options: {} });
@@ -45,12 +52,19 @@ const DashboardScreen = ({
 
 	const renderQuestions = () =>
 		questionsArr.map(cur => (
-			<div key={cur._id} className={dashboardStyle.questionGroup}>
-				<p className={dashboardStyle.question}>{cur.question}</p>
-				<div className={dashboardStyle.optionsGroup}>
-					{cur.options.map(option => (
-						<div key={option}>{option}</div>
-					))}
+			<div
+				key={cur._id}
+				className={dashboardStyle.questionGroup}
+				onClick={() => deleteQuestion(cur._id)}
+			>
+				<i className={`fas fa-trash ${dashboardStyle.delete}`}></i>
+				<div className={dashboardStyle.questionContainer}>
+					<p className={dashboardStyle.question}>{cur.question}</p>
+					<div className={dashboardStyle.optionsGroup}>
+						{cur.options.map(option => (
+							<div key={option}>{option}</div>
+						))}
+					</div>
 				</div>
 			</div>
 		));
@@ -113,5 +127,6 @@ export default connect(mapStateToProps, {
 	adminLogout,
 	getQuestions,
 	checkAdminAuth,
-	submitQuestion
+	submitQuestion,
+	deleteQuestion
 })(DashboardScreen);

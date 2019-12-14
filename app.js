@@ -31,6 +31,7 @@ const dbConnectionString =
 		  )}@ravikcluster-aiykj.mongodb.net/test?retryWrites=true&w=majority`
 		: "mongodb://localhost/quiz_db";
 
+mongoose.set("useFindAndModify", false);
 mongoose
 	.connect(dbConnectionString, {
 		useNewUrlParser: true,
