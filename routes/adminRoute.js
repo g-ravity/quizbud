@@ -34,6 +34,7 @@ router.post("/login", async (req, res) => {
 				const result = await bcrypt.compare(password, admin.password);
 				if (result) {
 					const token = admin.generateAuthToken();
+					console.log("req: ", req, "req.session: ", req.session);
 					req.session.authToken = token;
 					return res.status(200).send(admin.username);
 				}
@@ -48,6 +49,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
+	console.log("req: ", req, "req.session: ", req.session);
 	if (req.session.authToken) {
 		try {
 			const token = jwt.verify(req.session.authToken, config.get("jwtPrivateKey"));

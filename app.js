@@ -11,7 +11,7 @@ const playerRoute = require("./routes/playerRoute");
 const adminRoute = require("./routes/adminRoute");
 
 const app = express();
-app.enable("trust proxy");
+app.set("trust proxy", true);
 
 if (!config.get("jwtPrivateKey")) {
 	console.log("App Crashed! JWT Private Key not provided");

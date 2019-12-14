@@ -106,7 +106,7 @@ const DashboardScreen = ({
 				<p className={dashboardStyle.profile}>Hello, {admin}</p>
 			</div>
 			<div className={dashboardStyle.questionList}>
-				{questionsArr ? renderQuestions() : <Loader />}
+				{questionsArr.length ? renderQuestions() : <Loader />}
 			</div>
 			<div className={dashboardStyle.buttonGroup}>
 				<i
