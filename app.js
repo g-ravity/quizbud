@@ -51,6 +51,8 @@ app.use(
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.set("trust proxy", 1);
+
 // Cookie Session Middleware
 app.use(
 	cookieSession({
