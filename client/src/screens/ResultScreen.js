@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 import Showcase from "../components/Showcase";
 import Loader from "../components/Loader";
 import goldAward from "./img/gold.png";
-import silverAward from "./img/silver.png";
-import bronzeAward from "./img/bronze.png";
 import resultStyle from "./css/Result.module.css";
 import { getResults } from "../actions";
 
 const ResultScreen = ({ getResults, user }) => {
-	const [loading, setLoading] = useState(true);
 	const copyText = event => {
 		const link = document.getElementsByClassName("quiz-link")[0];
 		link.focus();
@@ -18,11 +15,6 @@ const ResultScreen = ({ getResults, user }) => {
 		document.execCommand("copy");
 		event.target.innerText = "Copied!";
 	};
-
-	useEffect(() => {
-		if (user.results && loading) setLoading(false);
-		// eslint-disable-next-line
-	}, [user.results]);
 
 	useEffect(() => {
 		getResults();
@@ -42,7 +34,7 @@ const ResultScreen = ({ getResults, user }) => {
 
 	return (
 		<Showcase>
-			{loading ? (
+			{!user.results ? (
 				<Loader />
 			) : (
 				<div className={resultStyle.table}>

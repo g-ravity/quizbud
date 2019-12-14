@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import Showcase from "../components/Showcase";
 import Loader from "../components/Loader";
 import Question from "../components/Question";
 import Modal from "../components/Modal";
+import quizStyle from "./css/Quiz.module.css";
 import { getQuestions, submitAnswer, submitUserData } from "../actions";
 
 const QuizScreen = ({ getQuestions, submitAnswer, submitUserData, questionsArr, userId }) => {
@@ -26,6 +28,14 @@ const QuizScreen = ({ getQuestions, submitAnswer, submitUserData, questionsArr, 
 		else setCurrentQuestion(currentQuestion + 1);
 	};
 
+	const copyText = event => {
+		const link = document.getElementsByClassName("quiz-link")[0];
+		link.focus();
+		link.select();
+		document.execCommand("copy");
+		event.target.innerText = "Copied!";
+	};
+
 	return (
 		<Showcase>
 			{loading ? (
@@ -39,7 +49,29 @@ const QuizScreen = ({ getQuestions, submitAnswer, submitUserData, questionsArr, 
 						onChoiceSubmit={onChoiceSubmit}
 						isPlayer={false}
 					/>
-					{userId ? <Modal userId={userId} /> : null}
+					{userId ? (
+						<Modal>
+							<p className={quizStyle.header}>Your Quiz has been created!</p>
+							<div className={quizStyle.linkGroup}>
+								<p>Here's your Quiz Link:</p>
+								<input
+									value={`http://localhost:3000/quiz/${userId}`}
+									className="quiz-link"
+									readOnly
+								/>
+								<div className={quizStyle.buttonGroup}>
+									<button onClick={copyText}>Copy Link</button>
+									<button>
+										<Link to={`/quiz/${userId}`}>Go to Results</Link>
+									</button>
+								</div>
+							</div>
+							<div className={quizStyle.info}>
+								<p>Share the above link with your friends</p>
+								<p>To check your results, visit the above link from this browser only!</p>
+							</div>
+						</Modal>
+					) : null}
 				</>
 			)}
 		</Showcase>

@@ -1,4 +1,5 @@
 {
 	"dbUsername": "quizbud_dbUsername",
-	"dbPassword": "quizbud_dbPassword"
+	"dbPassword": "quizbud_dbPassword",
+	"jwtPrivateKey": "quizbud_jwtPrivateKey"
 }

@@ -9,6 +9,12 @@ const app = express();
 const userRoute = require("./routes/userRoute");
 const questionRoute = require("./routes/questionRoute");
 const playerRoute = require("./routes/playerRoute");
+const adminRoute = require("./routes/adminRoute");
+
+if (!config.get("jwtPrivateKey")) {
+	console.log("App Crashed! JWT Private Key not provided");
+	process.exit(1);
+}
 
 if (
 	process.env.NODE_ENV === "production" &&
@@ -25,6 +31,7 @@ const dbConnectionString =
 		  )}@ravikcluster-aiykj.mongodb.net/test?retryWrites=true&w=majority`
 		: "mongodb://localhost/quiz_db";
 
+mongoose.set("useFindAndModify", false);
 mongoose
 	.connect(dbConnectionString, {
 		useNewUrlParser: true,
@@ -60,5 +67,6 @@ app.listen(PORT, () => {
 });
 
 app.use("/api/user", userRoute);
-app.use("/api/questions", questionRoute);
+app.use("/api/question", questionRoute);
 app.use("/api/player", playerRoute);
+app.use("/api/admin", adminRoute);

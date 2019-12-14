@@ -1,0 +1,135 @@
+.header {
+	margin: 40px 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.questionList {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.questionGroup {
+	background: #ffffff;
+	margin: 1%;
+	width: 48%;
+	border-radius: 20px;
+	box-sizing: border-box;
+	position: relative;
+}
+
+.questionGroup p,
+.questionGroup div {
+	color: #85a1ff;
+}
+
+.questionContainer {
+	padding: 20px;
+	border-radius: 20px;
+	border: none;
+	transition: all 0.2s ease-in-out;
+}
+
+.question {
+	font-size: 2rem;
+	font-weight: initial;
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+.optionsGroup {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.optionsGroup div {
+	border: 1px solid #85a1ff;
+	padding: 10px;
+	border-radius: 10px;
+	font-weight: 1.2rem;
+	cursor: context-menu;
+}
+
+.delete {
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	color: #333333;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+}
+
+.delete:hover {
+	color: #ff3030;
+}
+
+.delete:hover + .questionContainer {
+	border: 3px solid #ff3030;
+}
+
+.buttonGroup {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.button {
+	font-size: 1.5rem;
+	border-radius: 100px;
+	padding: 15px;
+	cursor: pointer;
+	margin: 5px;
+}
+
+.add {
+	background-color: #87ff0f;
+	color: #ffffff;
+	padding: 15px 17px;
+}
+
+.logout {
+	color: #ffffff;
+	background-color: #ff3030;
+}
+
+.questionInput {
+	background: none;
+	border: 2px solid #85a1ff;
+	padding: 10px;
+	color: #333333;
+	text-align: center;
+	border-radius: 10px;
+}
+
+.questionInput:focus {
+	outline: 0;
+}
+
+.questionInput {
+	font-size: 1.5rem;
+	font-weight: initial;
+	margin: 20px 0;
+	width: 90%;
+}
+
+.addButton {
+	background: #85a1ff;
+	color: #ffffff;
+	text-transform: uppercase;
+	padding: 10px;
+	border: none;
+	cursor: pointer;
+	margin-top: 20px;
+}
+
+.addButton:focus {
+	outline: 0;
+}

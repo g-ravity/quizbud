@@ -55,6 +55,21 @@ const quizReducer = (state = [], action) => {
 	switch (action.type) {
 		case "QUESTIONS":
 			return action.payload;
+		case "QUESTION_SUBMIT":
+			return [action.payload, ...state];
+		case "QUESTION_DELETE":
+			return state.filter(cur => cur._id !== action.payload._id);
+		default:
+			return state;
+	}
+};
+
+const adminReducer = (state = null, action) => {
+	switch (action.type) {
+		case "ADMIN_LOGGED_IN":
+			return action.payload;
+		case "ADMIN_LOGGED_OUT":
+			return false;
 		default:
 			return state;
 	}
@@ -64,5 +79,6 @@ export default combineReducers({
 	userId: authReducer,
 	questions: quizReducer,
 	user: userReducer,
-	player: playerReducer
+	player: playerReducer,
+	admin: adminReducer
 });

@@ -21,4 +21,13 @@ router.post("/", async (req, res) => {
 	res.status(200).send(question);
 });
 
+router.delete("/:id", async (req, res) => {
+	try {
+		const question = await Question.findByIdAndRemove(req.params.id);
+		return res.status(200).send(question);
+	} catch (err) {
+		return res.status(400).send("Error occurred while deleting question");
+	}
+});
+
 module.exports = router;

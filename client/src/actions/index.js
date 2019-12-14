@@ -41,9 +41,37 @@ export const checkRegistration = () => {
 export const getQuestions = () => {
 	return async (dispatch, getState) => {
 		try {
-			const response = await axiosApi.get("/api/questions");
+			const response = await axiosApi.get("/api/question");
 			dispatch({
 				type: "QUESTIONS",
+				payload: response.data
+			});
+		} catch (err) {
+			console.log("Something went wrong!");
+		}
+	};
+};
+
+export const submitQuestion = (question, options) => {
+	return async (dispatch, getState) => {
+		try {
+			const response = await axiosApi.post("/api/question", { question, options });
+			dispatch({
+				type: "QUESTION_SUBMIT",
+				payload: response.data
+			});
+		} catch (err) {
+			console.log("Something went wrong!");
+		}
+	};
+};
+
+export const deleteQuestion = id => {
+	return async (dispatch, getState) => {
+		try {
+			const response = await axiosApi.delete(`/api/question/${id}`);
+			dispatch({
+				type: "QUESTION_DELETE",
 				payload: response.data
 			});
 		} catch (err) {
@@ -112,6 +140,49 @@ export const getResults = () => {
 			});
 		} catch (err) {
 			console.log("Something went wrong!");
+		}
+	};
+};
+
+export const adminLogin = (username, password) => {
+	return async (dispatch, getState) => {
+		try {
+			const response = await axiosApi.post("/api/admin/login", { username, password });
+			dispatch({
+				type: "ADMIN_LOGGED_IN",
+				payload: response.data
+			});
+		} catch (err) {
+			console.log("Something went wrong!");
+		}
+	};
+};
+
+export const adminLogout = () => {
+	return async (dispatch, getState) => {
+		try {
+			await axiosApi.get("/api/admin/logout");
+			dispatch({
+				type: "ADMIN_LOGGED_OUT"
+			});
+		} catch (err) {
+			console.log("Something went wrong!");
+		}
+	};
+};
+
+export const checkAdminAuth = () => {
+	return async (dispatch, getState) => {
+		try {
+			const response = await axiosApi.get("/api/admin");
+			dispatch({
+				type: "ADMIN_LOGGED_IN",
+				payload: response.data
+			});
+		} catch (err) {
+			dispatch({
+				type: "ADMIN_LOGGED_OUT"
+			});
 		}
 	};
 };
