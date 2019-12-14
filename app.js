@@ -56,7 +56,8 @@ app.use(
 	cookieSession({
 		maxAge: 24 * 60 * 60 * 1000,
 		secret: "mySecretKey",
-		httpOnly: true
+		httpOnly: true,
+		secureProxy: true
 	})
 );
 

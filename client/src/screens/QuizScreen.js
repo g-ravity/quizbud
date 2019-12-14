@@ -55,7 +55,7 @@ const QuizScreen = ({ getQuestions, submitAnswer, submitUserData, questionsArr, 
 							<div className={quizStyle.linkGroup}>
 								<p>Here's your Quiz Link:</p>
 								<input
-									value={`http://localhost:3000/quiz/${userId}`}
+									value={`${window.location.href}/quiz/${userId}`}
 									className="quiz-link"
 									readOnly
 								/>
