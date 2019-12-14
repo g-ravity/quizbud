@@ -17,11 +17,11 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	/* border: 1px solid red; */
 }
 
 .icon {
-	margin-right: 10px;
+	margin-right: 20px;
+	font-size: 1.5rem;
 }
 
 .form input {

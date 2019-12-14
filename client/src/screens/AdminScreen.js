@@ -8,7 +8,6 @@ import { adminLogin, checkAdminAuth } from "../actions";
 const AdminScreen = ({ adminLogin, checkAdminAuth, admin, history }) => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		if (admin === null) checkAdminAuth();
@@ -16,10 +15,7 @@ const AdminScreen = ({ adminLogin, checkAdminAuth, admin, history }) => {
 	}, []);
 
 	useEffect(() => {
-		if (admin !== null) {
-			if (admin) history.push("/admin/dashboard");
-			else setLoading(false);
-		}
+		if (admin) history.push("/admin/dashboard");
 		// eslint-disable-next-line
 	}, [admin]);
 
@@ -28,7 +24,7 @@ const AdminScreen = ({ adminLogin, checkAdminAuth, admin, history }) => {
 		adminLogin(username, password);
 	};
 
-	return loading ? (
+	return admin === null ? (
 		<Loader />
 	) : (
 		<div>
@@ -36,7 +32,7 @@ const AdminScreen = ({ adminLogin, checkAdminAuth, admin, history }) => {
 			<form className={adminStyle.form} onSubmit={onFormSubmit}>
 				<div>
 					<label>
-						<i data-feather="user" className={adminStyle.icon}></i>
+						<i className={`far fa-user ${adminStyle.icon}`}></i>
 					</label>
 					<input
 						type="text"
@@ -48,7 +44,7 @@ const AdminScreen = ({ adminLogin, checkAdminAuth, admin, history }) => {
 				</div>
 				<div>
 					<label>
-						<i data-feather="lock" className={adminStyle.icon}></i>
+						<i className={`fas fa-lock ${adminStyle.icon}`}></i>
 					</label>
 					<input
 						type="password"
