@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const cookieSession = require("cookie-session");
+const session = require("express-session");
 const config = require("config");
 const cors = require("cors");
 
@@ -53,12 +53,18 @@ app.use(
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Cookie Session Middleware
+// Express Session Middleware
 app.use(
-	cookieSession({
-		maxAge: 24 * 60 * 60 * 1000,
+	session({
 		secret: "mySecretKey",
-		httpOnly: true
+		resave: false,
+		saveUninitialized: true,
+		proxy: true,
+		cookie: {
+			secure: process.env.NODE_ENV === "production",
+			httpOnly: true,
+			maxAge: 24 * 60 * 60 * 1000
+		}
 	})
 );
 
