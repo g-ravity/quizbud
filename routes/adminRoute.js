@@ -34,9 +34,10 @@ router.post("/login", async (req, res) => {
 				const result = await bcrypt.compare(password, admin.password);
 				if (result) {
 					const token = admin.generateAuthToken();
-					req.session.authToken = token;
-					console.log(req.session.authToken);
-					return res.status(200).send(admin.username);
+					return res
+						.status(200)
+						.header("authorization", token)
+						.send(admin.username);
 				}
 				return res.status(400).send("Incorrect Password");
 			}
@@ -49,22 +50,17 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-	console.log(req.session.authToken);
-	if (req.session.authToken) {
+	if (req.headers.authorization) {
 		try {
-			const token = jwt.verify(req.session.authToken, config.get("jwtPrivateKey"));
+			const token = jwt.verify(req.headers.authorization, config.get("jwtPrivateKey"));
 			const admin = await Admin.findById(token.id);
-			return res.status(200).send(admin.username);
+			if (admin) return res.status(200).send(admin.username);
+			return res.status(400).send("Admin not found");
 		} catch (err) {
 			return res.status(400).send("Invalid Token");
 		}
 	}
-	return res.status(400).send("Token Missing");
-});
-
-router.get("/logout", (req, res) => {
-	req.session.authToken = null;
-	return res.status(200).send("Logged Out");
+	return res.status(400).send("No credentials sent");
 });
 
 module.exports = router;

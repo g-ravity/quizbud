@@ -1,7 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const session = require("express-session");
 const config = require("config");
 const cors = require("cors");
 
@@ -52,21 +51,6 @@ app.use(
 // Body Parser Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-// Express Session Middleware
-app.use(
-	session({
-		secret: "mySecretKey",
-		resave: false,
-		saveUninitialized: true,
-		proxy: true,
-		cookie: {
-			secure: process.env.NODE_ENV === "production",
-			httpOnly: true,
-			maxAge: 24 * 60 * 60 * 1000
-		}
-	})
-);
 
 const PORT = process.env.PORT || 5000;
 

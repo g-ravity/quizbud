@@ -12,8 +12,10 @@ const SplashScreen = props => {
 	const [loading, setLoading] = useState(true);
 	const [isPlayer, setPlayer] = useState(null);
 
-	const checkForCookie = async () => {
-		const { data } = await axiosApi.get(`/api/user/${props.match.params.userId}`);
+	const checkForToken = async () => {
+		const { data } = await axiosApi.get(`/api/user/${props.match.params.userId}`, {
+			headers: { "x-userid": localStorage.getItem("id") ? localStorage.getItem("id") : "" }
+		});
 		props.storeUserData(data.userData);
 		if (data.isPlayer) setPlayer(true);
 		else setPlayer(false);
@@ -21,7 +23,7 @@ const SplashScreen = props => {
 	};
 
 	useEffect(() => {
-		checkForCookie();
+		checkForToken();
 		// eslint-disable-next-line
 	}, []);
 
