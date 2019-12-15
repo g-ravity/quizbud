@@ -4,7 +4,18 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased](https://github.com/g-ravity/quizbud/compare/v1.2.1...g-ravity:master)
+## [Unreleased](https://github.com/g-ravity/quizbud/compare/v1.2.2...g-ravity:master)
+
+## [1.2.1](https://github.com/g-ravity/quizbud/releases/tag/v1.2.2) - 2019-12-15
+
+## Added
+
+- Better documentation
+- HTTP Session using JSON Web Token & localStorage
+
+### Fixed
+
+- Cookie not getting sent across different domains
 
 ## [1.2.1](https://github.com/g-ravity/quizbud/releases/tag/v1.2.1) - 2019-12-14
 
