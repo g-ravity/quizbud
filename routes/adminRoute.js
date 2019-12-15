@@ -34,10 +34,10 @@ router.post("/login", async (req, res) => {
 				const result = await bcrypt.compare(password, admin.password);
 				if (result) {
 					const token = admin.generateAuthToken();
-					return res
-						.status(200)
-						.header("authorization", token)
-						.send(admin.username);
+					return res.status(200).send({
+						token,
+						username: admin.username
+					});
 				}
 				return res.status(400).send("Incorrect Password");
 			}

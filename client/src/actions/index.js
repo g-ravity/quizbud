@@ -157,10 +157,10 @@ export const adminLogin = (username, password) => {
 		try {
 			localStorage.removeItem("authToken");
 			const response = await axiosApi.post("/api/admin/login", { username, password });
-			localStorage.setItem("authToken", response.headers.authorization);
+			localStorage.setItem("authToken", response.data.token);
 			dispatch({
 				type: "ADMIN_LOGGED_IN",
-				payload: response.data
+				payload: response.data.username
 			});
 		} catch (err) {
 			console.log("Something went wrong!");
