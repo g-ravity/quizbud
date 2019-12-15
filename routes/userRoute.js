@@ -19,10 +19,10 @@ router.post("/", async (req, res) => {
 		quiz: req.body.quiz
 	});
 	user = await user.save();
-	return res
-		.status(200)
-		.header("x-userid", user.id)
-		.send(user.userId);
+	return res.status(200).send({
+		userId: user.userId,
+		id: user.id
+	});
 });
 
 router.get("/:userId", async (req, res) => {

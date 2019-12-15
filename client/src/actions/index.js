@@ -13,10 +13,10 @@ export const submitUserData = user => {
 		try {
 			localStorage.removeItem("id");
 			const response = await axiosApi.post("/api/user", { name: user.name, quiz: user.quiz });
-			localStorage.setItem("id", response.headers["x-userid"]);
+			localStorage.setItem("id", response.data.id);
 			dispatch({
 				type: "USER_REGISTERED",
-				payload: response.data
+				payload: response.data.userId
 			});
 		} catch (err) {
 			console.log("Something went wrong!");
