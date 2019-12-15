@@ -88,5 +88,5 @@ will automatically get created on deployment.
 
 This project is licensed under the MIT License -
 see the
-[LICENSE.md](https://www.mit.edu/~amini/LICENSE.md)
+[LICENSE.md](LICENSE.md)
 file for details
