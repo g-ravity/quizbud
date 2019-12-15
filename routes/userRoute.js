@@ -5,12 +5,12 @@ const User = require("../models/user");
 const Player = require("../models/player");
 
 router.get("/", async (req, res) => {
-	if (req.session.id) {
-		const user = await User.findById(req.session.id);
+	if (req.headers["x-userid"]) {
+		const user = await User.findById(req.headers["x-userid"]);
 		if (user) return res.status(200).send(user.userId);
 		return res.status(404).send("User doesn't exist");
 	}
-	return res.status(400).send("User not registered");
+	return res.status(400).send("User ID not sent");
 });
 
 router.post("/", async (req, res) => {
@@ -19,13 +19,15 @@ router.post("/", async (req, res) => {
 		quiz: req.body.quiz
 	});
 	user = await user.save();
-	req.session.id = user.id;
-	return res.status(200).send(user.userId);
+	return res
+		.status(200)
+		.header("x-userid", user.id)
+		.send(user.userId);
 });
 
 router.get("/:userId", async (req, res) => {
-	if (req.session.id) {
-		const user = await User.findById(req.session.id);
+	if (req.headers["x-userid"]) {
+		const user = await User.findById(req.headers["x-userid"]);
 		if (user)
 			return res.status(200).send({
 				isPlayer: false,

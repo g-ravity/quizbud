@@ -11,7 +11,9 @@ export const submitUserData = user => {
 	return async (dispatch, getState) => {
 		const { user } = getState();
 		try {
+			localStorage.removeItem("id");
 			const response = await axiosApi.post("/api/user", { name: user.name, quiz: user.quiz });
+			localStorage.setItem("id", response.headers["x-userid"]);
 			dispatch({
 				type: "USER_REGISTERED",
 				payload: response.data
@@ -23,9 +25,15 @@ export const submitUserData = user => {
 };
 
 export const checkRegistration = () => {
+	if (!localStorage.getItem("id"))
+		return {
+			type: "USER_NOT_REGISTERED"
+		};
 	return async (dispatch, getState) => {
 		try {
-			const response = await axiosApi.get("/api/user");
+			const response = await axiosApi.get("/api/user", {
+				headers: { "x-userid": localStorage.getItem("id") }
+			});
 			dispatch({
 				type: "USER_REGISTERED",
 				payload: response.data
@@ -147,7 +155,9 @@ export const getResults = () => {
 export const adminLogin = (username, password) => {
 	return async (dispatch, getState) => {
 		try {
+			localStorage.removeItem("authToken");
 			const response = await axiosApi.post("/api/admin/login", { username, password });
+			localStorage.setItem("authToken", response.headers.authorization);
 			dispatch({
 				type: "ADMIN_LOGGED_IN",
 				payload: response.data
@@ -159,22 +169,22 @@ export const adminLogin = (username, password) => {
 };
 
 export const adminLogout = () => {
-	return async (dispatch, getState) => {
-		try {
-			await axiosApi.get("/api/admin/logout");
-			dispatch({
-				type: "ADMIN_LOGGED_OUT"
-			});
-		} catch (err) {
-			console.log("Something went wrong!");
-		}
+	localStorage.removeItem("authToken");
+	return {
+		type: "ADMIN_LOGGED_OUT"
 	};
 };
 
 export const checkAdminAuth = () => {
+	if (!localStorage.getItem("authToken"))
+		return {
+			type: "ADMIN_LOGGED_OUT"
+		};
 	return async (dispatch, getState) => {
 		try {
-			const response = await axiosApi.get("/api/admin");
+			const response = await axiosApi.get("/api/admin", {
+				headers: { authorization: localStorage.getItem("authToken") }
+			});
 			dispatch({
 				type: "ADMIN_LOGGED_IN",
 				payload: response.data
