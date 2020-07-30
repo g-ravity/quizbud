@@ -44,7 +44,7 @@ mongoose
 
 app.use(
 	cors({
-		origin: "https://quizbud.netlify.com"
+		origin: "https://quizbud.netlify.app"
 	})
 );
 
